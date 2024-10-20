@@ -40,8 +40,9 @@ wss.on("connection", (ws: WebSocket) => {
           CLIENTS_LIST[orderbookId] = [ws];
 
           await subscriber.subscribe(orderbookId, (message) => {
+            const orderbook = message.toString();
             CLIENTS_LIST[orderbookId].forEach((client) => {
-              client.send(JSON.stringify(ORDERBOOK[orderbookId]));
+              client.send(orderbook);
             });
           });
         } else {
